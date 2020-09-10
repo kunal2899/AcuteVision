@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "av-web"
+    }
+  },
+  "defaultProject": "av-web",
+  "cli": {
+    "analytics": "005e40d8-a7c7-4cee-bc16-b98f30fbbd48"
+  }
 }
