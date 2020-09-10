@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button{
+  visibility: hidden;
+}
+
 input {
   font-family: "Poppins", sans-serif;
 }
@@ -88,6 +93,7 @@ form.sign-in-form {
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   position: relative;
+  overflow: hidden;
 }
 
 .input-field i {
@@ -107,15 +113,16 @@ form.sign-in-form {
   font-size: 1rem;
   color: #333;
 }
-.input-field select{
-  width: 100px;
+.input-field #select{
+  width: auto;
   position: absolute;
   height: 100%;
-  left: 55px;
+  left: 14.4%;
+  text-align: center;
   background: transparent;
   border: none;
   font-family: 'Poppins', sans-serif;
-  font-size: .8rem;
+  font-size: 1rem;
   font-weight: 600;
   padding-left: 0;
   color: #333;
@@ -124,14 +131,22 @@ form.sign-in-form {
   box-shadow: none;
 }
 
-.input-field input[type=tel]{
+.input-field input[type=number]{
   position: relative;
-  left: 100px;
+  left: 13.8%;
+  z-index: 2;
+  background-color: #f0f0f0;
 }
 
 .input-field input::placeholder {
   color: #aaa;
   font-weight: 500;
+}
+
+.input-field #select::placeholder{
+  color: #aaa;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 .social-text {
@@ -429,5 +444,11 @@ form.sign-in-form {
   .container.sign-up-mode:before {
     bottom: 28%;
     left: 50%;
+  }
+}
+
+@media (max-width: 430px){
+  .input-field input[type=number]{
+    left: 17.1%;
   }
 }
