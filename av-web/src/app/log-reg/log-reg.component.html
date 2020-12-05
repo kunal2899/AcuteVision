@@ -8,16 +8,16 @@
             <input type="text" formControlName="username" placeholder="Username or email" />
           </div>
           <marquee direction="down" behavior="slide" loop="1" class="error" scrolldelay="1" *ngIf="loginForm.get('username').invalid && (loginForm.get('username').touched )">
-            <div *ngIf="loginForm.get('username').errors.required">Username Cannot Be Empty</div>
-            <div *ngIf="loginForm.get('username').errors.minlength">Username Is Not Valid</div>
+            <small *ngIf="loginForm.get('username').errors.required">Username is required</small>
+            <!-- <div *ngIf="loginForm.get('username').errors.minlength">Username Is Not Valid</div> -->
           </marquee>
           <div class="input-field" [class.input-field-error]="loginForm.get('password').invalid && (loginForm.get('password').touched )">
             <i class="fas fa-lock"></i>
             <input type="password" formControlName="password" placeholder="Password" />
           </div>
           <marquee direction="down" behavior="slide" loop="1" class="error" scrolldelay="1" *ngIf="loginForm.get('password').invalid && (loginForm.get('password').touched )">
-            <div *ngIf="loginForm.get('password').errors.required">Password Cannot Be Empty</div>
-            <div *ngIf="loginForm.get('password').errors.minlength">Password Is Not Valid</div>
+            <small *ngIf="loginForm.get('password').errors.required">Password is required</small>
+            <!-- <div *ngIf="loginForm.get('password').errors.minlength">Password Is Not Valid</div> -->
           </marquee>
           <input type="submit" [disabled]="loginForm.invalid" value="Login" class="btn solid" />
         </form>
@@ -28,24 +28,25 @@
             <input type="text" formControlName="fullname" placeholder="Full Name"  required/>
           </div>
           <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('fullname').invalid && (signupForm.get('fullname').touched )">
-            <div *ngIf="signupForm.get('fullname').errors.required">Name Cannot Be Empty</div>
-            <div *ngIf="signupForm.get('fullname').errors.pattern">Please Enter Valid Name</div>
+            <small *ngIf="signupForm.get('fullname').errors.required">Name is required</small>
+            <small *ngIf="signupForm.get('fullname').errors.pattern">Enter valid name</small>
           </marquee>
           <div class="input-field" [class.input-field-error]="signupForm.get('enrollment').invalid && (signupForm.get('enrollment').touched )">
             <i class="fas fa-fingerprint"></i>
             <input type="text" formControlName="enrollment" placeholder="Enrollment Number" required />
           </div>
           <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('enrollment').invalid && (signupForm.get('enrollment').touched )">
-            <div *ngIf="signupForm.get('enrollment').errors.required">Enrollment Number Cannot Be Empty</div>
-            <div *ngIf="signupForm.get('enrollment').errors.pattern">Please Enter a Valid Enrollment Number</div>
+            <small *ngIf="signupForm.get('enrollment').errors.required">Enrollment Number is required</small>
+            <small *ngIf="signupForm.get('enrollment').errors.pattern">Enter a valid Enrollment Number</small>
           </marquee>
           <div class="input-field" [class.input-field-error]="signupForm.get('email').invalid && (signupForm.get('email').touched )">
             <i class="fas fa-envelope"></i>
             <input type="email" formControlName="email" placeholder="Email ID" required />
           </div>
           <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('email').invalid && (signupForm.get('email').touched )">
-            <div *ngIf="signupForm.get('email').errors.required">Email Cannot Be Empty</div>
-            <div *ngIf="signupForm.get('email').errors.email">Enter a Valid Email Address</div>
+            <small *ngIf="signupForm.get('email').errors.required">Email is required</small>
+            <small *ngIf="signupForm.get('email').errors.email">Enter a valid email address</small>
+            <!-- <small *ngIf="signupForm.get('email').errors.pattern">Enter a valid email address</small> -->
           </marquee>
           <div class="input-field" [class.input-field-error]="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
             <i class="fas fa-mobile"></i>
@@ -271,25 +272,24 @@
             <input type="number" formControlName="mobile" placeholder="Mobile Number" />
           </div>
           <marquee direction="down" behavior="slide" class="error"  *ngIf="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
-            <div *ngIf="signupForm.get('mobile').errors.required">Mobile Number Cannot Be Empty</div>
-            <div *ngIf="signupForm.get('mobile').errors.pattern">Please Enter a Valid Mobile Number</div>
+            <small *ngIf="signupForm.get('mobile').errors.required">Mobile number is required</small>
+            <small *ngIf="signupForm.get('mobile').errors.pattern">Enter a valid mobile number</small>
           </marquee>
           <div class="input-field" [class.input-field-error]="signupForm.get('username').invalid && (signupForm.get('username').touched )">
             <i class="fas fa-user"></i>
             <input type="text" formControlName="username" placeholder="Create Username" />
           </div>
           <marquee direction="down" behavior="slide" class="error"  *ngIf="signupForm.get('username').invalid && (signupForm.get('username').touched )">
-            <div *ngIf="signupForm.get('username').errors.required">Username Cannot Be Empty</div>
-            <div *ngIf="signupForm.get('username').errors.pattern">Please Enter a Valid Username</div>
+            <small *ngIf="signupForm.get('username').errors.required">Username is required</small>
+            <small *ngIf="signupForm.get('username').errors.pattern">Enter a valid username</small>
           </marquee>
           <div class="input-field" [class.input-field-error]="signupForm.get('password').invalid && (signupForm.get('password').touched )">
             <i class="fas fa-lock"></i>
             <input type="password" formControlName="password" placeholder="Create Password" />
           </div>
           <marquee direction="down" behavior="slide"  class="error" *ngIf="signupForm.get('password').invalid && (signupForm.get('password').touched )">
-            <div *ngIf="signupForm.get('password').errors.required">Password Cannot Be Empty</div>
-            <div *ngIf="signupForm.get('password').errors.pattern">Please Enter a Valid Password
-            </div>
+            <small *ngIf="signupForm.get('password').errors.required">Password is required</small>
+            <small *ngIf="signupForm.get('password').errors.pattern">Enter a valid password</small>
           </marquee>
           <input type="submit" [disabled]="signupForm.invalid" class="btn" value="Register" />
         </form>

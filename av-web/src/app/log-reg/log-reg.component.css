@@ -323,6 +323,7 @@ form.sign-in-form {
   max-width: 380px;
   width: 100%;
   background-color: rgba(202, 49, 49, 0.281);
+  font-size: 10px;
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
