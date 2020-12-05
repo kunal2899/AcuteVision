@@ -24,6 +24,7 @@ input {
   overflow: hidden;
 }
 
+
 .forms-container {
   position: absolute;
   width: 100%;
@@ -126,7 +127,6 @@ form.sign-in-form {
   font-weight: 600;
   padding-left: 0;
   color: #333;
-  /* padding-right: 7px; */
   outline: none;
   box-shadow: none;
 }
@@ -135,7 +135,7 @@ form.sign-in-form {
   position: relative;
   left: 13.8%;
   z-index: 2;
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
 }
 
 .input-field input::placeholder {
@@ -318,6 +318,44 @@ form.sign-in-form {
   pointer-events: all;
 }
 
+
+.input-field-error {
+  max-width: 380px;
+  width: 100%;
+  background-color: rgba(202, 49, 49, 0.281);
+  margin: 10px 0;
+  height: 55px;
+  border-radius: 55px;
+  /* border:1px solid red; */
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+  position: relative;
+  color:black;
+  overflow: hidden;
+}
+
+.input-field input[type=number] .ng-invalid,.input-field input[type=number] .ng-touched{
+  position: relative;
+  left: 13.8%;
+  z-index: 2;
+  background-color: rgba(202, 49, 49, 0.281);
+}
+
+.error{
+  display: flex;
+  justify-content:center;
+  color:red;
+  font-size: 15px;
+  font-weight:350;
+  margin-top:-10px;
+}
+
+input[type="number"] .ng-invalid,input[type="number"] .ng-touched{
+  background-color: rgba(202, 49, 49, 0.281);
+}
+
+
 @media (max-width: 870px) {
   .container {
     min-height: 800px;
@@ -452,3 +490,4 @@ form.sign-in-form {
     left: 17.1%;
   }
 }
+
