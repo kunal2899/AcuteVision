@@ -11,7 +11,7 @@
             <small *ngIf="loginForm.get('username').errors.required">Username is required</small>
             <!-- <div *ngIf="loginForm.get('username').errors.minlength">Username Is Not Valid</div> -->
           </marquee>
-          <div class="input-field" [class.input-field-error]="loginForm.get('password').invalid && (loginForm.get('password').touched )">
+          <div style="margin-top: 15px;" class="input-field" [class.input-field-error]="loginForm.get('password').invalid && (loginForm.get('password').touched )">
             <i class="fas fa-lock"></i>
             <input type="password" formControlName="password" placeholder="Password" />
           </div>
@@ -19,7 +19,7 @@
             <small *ngIf="loginForm.get('password').errors.required">Password is required</small>
             <!-- <div *ngIf="loginForm.get('password').errors.minlength">Password Is Not Valid</div> -->
           </marquee>
-          <input type="submit" value="Login" class="btn solid" />
+          <input style="margin-top: 20px;" type="submit" value="Login" class="btn solid" />
         </form>
         <form [formGroup]="signupForm" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
           <h2 class="title">Sign up</h2>
