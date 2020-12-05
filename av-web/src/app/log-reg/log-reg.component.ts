@@ -44,11 +44,19 @@ export class LogRegComponent implements OnInit {
   })
 
   loginUser(){
-    alert("it works");
+    if(this.loginForm.valid){
+      alert("it works");
+    } else{
+      this.loginForm.markAllAsTouched()
+    }
   }
 
   signUpUser(){
-    alert("It works");
+    if(this.signupForm.valid){
+      alert("it works");
+    } else{
+      this.signupForm.markAllAsTouched()
+    }
   }
 
 

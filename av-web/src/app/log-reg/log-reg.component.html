@@ -19,7 +19,7 @@
             <small *ngIf="loginForm.get('password').errors.required">Password is required</small>
             <!-- <div *ngIf="loginForm.get('password').errors.minlength">Password Is Not Valid</div> -->
           </marquee>
-          <input type="submit" [disabled]="loginForm.invalid" value="Login" class="btn solid" />
+          <input type="submit" value="Login" class="btn solid" />
         </form>
         <form [formGroup]="signupForm" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
           <h2 class="title">Sign up</h2>
@@ -290,7 +290,7 @@
             <small *ngIf="signupForm.get('password').errors.required">Password is required</small>
             <small *ngIf="signupForm.get('password').errors.pattern">Enter a valid password</small>
           </marquee>
-          <input type="submit" [disabled]="signupForm.invalid" class="btn" value="Register" />
+          <input type="submit" class="btn" value="Register" />
         </form>
       </div>
     </div>

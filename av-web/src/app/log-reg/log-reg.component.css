@@ -8,7 +8,7 @@
 
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button{
-  visibility: hidden;
+  display: none;
 }
 
 input {
@@ -97,12 +97,21 @@ form.sign-in-form {
   overflow: hidden;
 }
 
+.sign-up-form .input-field{
+  height: 40px;
+}
+
 .input-field i {
   text-align: center;
   line-height: 55px;
   color: #acacac;
   transition: 0.5s;
   font-size: 1.1rem;
+}
+
+.sign-up-form .input-field i {
+  line-height: 40px;
+  font-size: 0.9rem;
 }
 
 .input-field input {
@@ -113,6 +122,10 @@ form.sign-in-form {
   font-weight: 600;
   font-size: 1rem;
   color: #333;
+}
+.sign-up-form .input-field input{
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 .input-field #select{
   width: auto;
@@ -134,8 +147,8 @@ form.sign-in-form {
 .input-field input[type=number]{
   position: relative;
   left: 13.8%;
-  z-index: 2;
-  /* background-color: #f0f0f0; */
+  z-index: 4;
+  background-color: #f0f0f0;
 }
 
 .input-field input::placeholder {
@@ -322,7 +335,8 @@ form.sign-in-form {
 .input-field-error {
   max-width: 380px;
   width: 100%;
-  background-color: rgba(202, 49, 49, 0.281);
+  /* background-color: rgba(211, 36, 36, 0.212); */
+  box-shadow: 0 0 30px rgba(250, 0, 0, 0.685);
   font-size: 10px;
   margin: 10px 0;
   height: 55px;
