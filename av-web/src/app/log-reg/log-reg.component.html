@@ -46,7 +46,6 @@
           <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('email').invalid && (signupForm.get('email').touched )">
             <small *ngIf="signupForm.get('email').errors.required">Email is required</small>
             <small *ngIf="signupForm.get('email').errors.email">Enter a valid email address</small>
-            <!-- <small *ngIf="signupForm.get('email').errors.pattern">Enter a valid email address</small> -->
           </marquee>
           <div class="input-field" [class.input-field-error]="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
             <i class="fas fa-mobile"></i>
