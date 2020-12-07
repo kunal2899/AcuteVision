@@ -8,13 +8,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LogRegComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    matched:Boolean;
+  }
 
   ngOnInit(): void {
 
     const sign_in_btn = document.querySelector("#sign-in-btn");
     const sign_up_btn = document.querySelector("#sign-up-btn");
     const container = document.querySelector(".container");
+    var matched = false;
 
     sign_up_btn.addEventListener("click", () => {
       container.classList.add("sign-up-mode");
@@ -28,6 +31,7 @@ export class LogRegComponent implements OnInit {
 
   }
 
+
   loginForm = new FormGroup({
     username:new FormControl(null,[Validators.required]),
     password:new FormControl(null,[Validators.required])
@@ -40,8 +44,10 @@ export class LogRegComponent implements OnInit {
     // ,Validators.pattern("[A-Za-z\d\._-]+@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,5})(\.[a-zA-Z]{2,5})?")
     mobile:new FormControl(null,[Validators.required,Validators.pattern("[0-9]{10}")]),
     username:new FormControl(null,[Validators.required,Validators.pattern("[a-zA-Z0-9]{3,}")]),
-    password:new FormControl(null,[Validators.required,Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,30}')])
+    password:new FormControl(null,[Validators.required,Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,30}')]),
+    password1:new FormControl(null,[Validators.required])
   })
+
 
   loginUser(){
     if(this.loginForm.valid){
@@ -50,6 +56,22 @@ export class LogRegComponent implements OnInit {
       this.loginForm.markAllAsTouched()
     }
   }
+
+  checkType(){
+    let val = this.signupForm.get('type').value
+    if(val == 'student'){
+      alert('student')
+    }
+    if(val == 'teacher'){
+      alert('teacher')
+    }
+  }
+
+  // isMatched(){
+  //   if(this.signupForm.get('password') == this.signupForm.get('password1').value){
+  //     matched
+  //   }
+  // }
 
   signUpUser(){
     if(this.signupForm.valid){

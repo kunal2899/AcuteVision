@@ -360,6 +360,35 @@ form.sign-in-form {
   background-color: rgba(202, 49, 49, 0.281);
 }
 
+/* .input-field small{
+  margin-top: 50px;
+} */
+
+.select-type{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: 0 30px;
+  padding-right: 20px;
+}
+
+.select-type label{
+  font-weight: 600;
+}
+
+.select-type select{
+  height: 100%;
+  width: auto;
+  padding: 0 5px;
+  /* padding-left: 5px; */
+  font-family: 'Poppins';
+  font-size: 1rem;
+  background: none;
+  border: none;
+  outline: none;
+}
+
 .error{
   display: flex;
   justify-content:center;
