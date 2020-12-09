@@ -128,7 +128,8 @@ form.sign-in-form {
   font-size: 0.9rem;
   font-weight: 500;
 }
-.input-field #select{
+.input-field #select,
+.input-field .sel{
   width: auto;
   position: absolute;
   height: 100%;

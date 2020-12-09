@@ -249,3 +249,19 @@ FULL NAME
             <small *ngIf="signupForm.get('fullname').errors.required">Name is required</small>
             <small *ngIf="signupForm.get('fullname').errors.pattern">Enter valid name</small>
           </marquee>
+
+DEPT
+
+<optgroup data-group="BTech" title="B.E./B.Tech.">
+                  <option data-countryCode="CSE" value="CSE" selected>Computer Science Engineering</option>
+                  <option data-countryCode="IT" value="IT">Information Technology</option>
+                  <option data-countryCode="ME" value="ME">Mechanical Engineering</option>
+                  <option data-countryCode="CE" value="CE">Civil Engineering</option>
+                  <option data-countryCode="ECE" value="ECE">Electronics & Communication Engineering</option>
+                  <option data-countryCode="EEE" value="EEE">Electrical & Electronics Engineering</option>
+                  <option data-countryCode="EE" value="EE">Electrical Engineering</option>
+                  <option data-countryCode="EIE" value="EIE">Electronics & Instrumentation Engineering</option>
+                  <option data-countryCode="PE" value="PE">Production Engineering</option>
+                  <option data-countryCode="AE" value="AE">Automobile Engineering</option>
+                  <option data-countryCode="ChE" value="ChE">Chemical Engineering</option>
+                </optgroup>
