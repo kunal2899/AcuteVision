@@ -1,0 +1,175 @@
+.sidenav-container {
+  height: 100%;
+  background-color: black;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sidenav{
+  background: linear-gradient(145deg,rgb(59, 59, 59),rgb(59, 59, 59));
+  border: none;
+}
+
+.sidenav a{
+  font-family: 'Montserrat', 'Poppins';
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 17px;
+  height: 70px;
+  display: block;
+  transition: .25s;
+  text-transform: uppercase;
+}
+.sidenav .profile{
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  height: 70px;
+  /* border: 1px solid black; */
+  background: rgba(46, 46, 46, 0.644);
+  margin-bottom: 10px;
+}
+
+.sidenav .attendance{
+  margin: 10px 0;
+  padding: 5px 0;
+  background: rgb(15, 15, 15);
+  overflow: hidden;
+}
+
+.sidenav .attendance h3{
+  font-family: 'Poppins';
+  line-height: .9rem;
+  font-size: .8rem;
+  margin: 13px;
+}
+
+.sidenav .attendance h1{
+  font-size: 4em;
+  font-family: 'Poppins';
+  position: relative;
+  left: 50%;
+  transform: translateX(-10%);
+  font-weight: 600;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.sidenav .profile img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 10px 15px;
+}
+
+.sidenav .profile h3{
+  font-family: 'Poppins';
+  font-size: .9rem;
+  margin: 0;
+  margin-top: 20px;
+  line-height: 1.1rem;
+  font-weight: 600;
+}
+
+.sidenav .profile h4{
+  font-family: 'Poppins';
+  font-size: .7rem;
+  opacity: .5;
+  transition: .25s;
+}
+
+.sidenav .profile h4:hover{
+  padding-left: 5px;
+  opacity: 1;
+}
+
+.sidenav span{
+  height: 95%;
+  width: 8px;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 0;
+  left: -8px;
+  opacity: 1;
+  transition: .5s;
+}
+
+.sidenav a:hover,
+mat-nav-list a.menu-active
+{
+  padding-left: 15px;
+}
+
+.sidenav .logout:hover{
+  padding-left: 35px;
+}
+
+.nav-link{
+  font-size: 25px;
+  display: inline-block;
+  margin: 2px;
+  width: 55px;
+  transition: .5s;
+}
+
+.nav-link:hover, 
+.link-grp a.link-active{
+  text-shadow: 0 0 25px white;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.link-grp{
+  right: 0;
+  position: absolute;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+  font-family: 'Montserrat', 'Poppins';
+  padding: 0px 70px;
+  letter-spacing: 4px;
+  font-weight: 500;
+  background-color: rgb(56, 56, 56);
+  margin: 0;
+}
+#brand{
+  font-family: 'Poppins';
+  letter-spacing: 1.5px;
+  margin-left: 10px;
+}
+
+.sidenav-container .greet{
+  font-family: 'Poppins';
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  font-size: 3.2em;
+  font-weight: 600;
+}
+
+.sidenav-container .welcome{
+  margin-top: 280px;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 600px){
+  #brand{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
