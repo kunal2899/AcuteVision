@@ -18,7 +18,7 @@ export class AuthenticationService {
     this.http.post<Response>(`${this.url}/api/login`,{header}).subscribe(
       (data:Response)=>{
         sessionStorage.setItem("USERID",data.username);
-        sessionStorage.setItem("TOCKEN", basicHeaderString);
+        sessionStorage.setItem("TOKEN", basicHeaderString);
         if(data.is_student){
           sessionStorage.setItem("USERTYPE","STUDENT");
         }
