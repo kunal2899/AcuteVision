@@ -1,0 +1,14 @@
+.greet{
+    font-family: 'Poppins';
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    font-size: 3.2em;
+    font-weight: 600;
+  }
+  
+.welcome{
+    margin-top: 280px;
+    font-size: 2em;
+    font-weight: 600;
+  }

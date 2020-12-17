@@ -14,12 +14,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { ProfileComponent } from './profile/profile.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogRegComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@
           <img src="../../assets/idphoto.jpg" alt="">
           <div>
             <h3>{{user_name}}</h3>
-            <h4>Go to profile >></h4>
+            <h4 routerLink="profile">Go to profile >></h4>
           </div>
         </div>
         <a mat-list-item href="#"><span></span>Take<br>Attendance</a>
@@ -48,9 +48,6 @@
       </button>
       <span id="brand">AcuteVISION</span>
     </mat-toolbar>
-    <!-- Add Content Here -->
-    <img src="../../assets/logo.jpeg" height="89%" style="position: absolute; left: 50%; transform: translateX(-50%); z-index: -3;" width="inherit" alt="">
-    <h1 class="greet">Hey, {{user_name.split(' ')[0]}}</h1>
-    <h1 class="greet welcome">Welcomes you!!</h1>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
