@@ -22,66 +22,68 @@
           <input style="margin-top: 20px;" type="submit" value="Login" class="btn solid" />
         </form>
 
-        <form style="display: flex;" [formGroup]="signupForm" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
+        <form id="user_form" style="display: flex;"  [formGroup]="signupForm1" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
           <h2 class="title">Sign up</h2>
           <div class="input-field select-type">
             <label for="">I am</label>
-            <select name="type" id="type">
-              <option value="student" selected>Student</option>
-              <option value="teacher">Teacher</option>
+            <select name="type" id="type" formControlName="userType" (change)="changePlaceholderandValidators($event);">
+              <option value="student" [selected] ="true">Student</option>
+              <option value="teacher" >Teacher</option>
             </select>
           </div>
 
-          <div class="input-field" [class.input-field-error]="signupForm.get('enrollment').invalid && (signupForm.get('enrollment').touched )">
-            <i class="fas fa-fingerprint"></i>
-            <input type="text" formControlName="enrollment" placeholder="Enrollment Number" required />
-          </div>
-          <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('enrollment').invalid && (signupForm.get('enrollment').touched )">
-            <small *ngIf="signupForm.get('enrollment').errors.required">Enrollment Number is required</small>
-            <small *ngIf="signupForm.get('enrollment').errors.pattern">Enter a valid Enrollment Number</small>
-          </marquee>
-
-          <div class="input-field" [class.input-field-error]="signupForm.get('username').invalid && (signupForm.get('username').touched )">
+          <div  *ngIf="isTeacher" class="input-field"  [class.input-field-error]="signupForm1.get('username_enrollment').invalid && (signupForm1.get('username_enrollment').touched )">
             <i class="fas fa-user"></i>
-            <input type="text" formControlName="username" placeholder="Create Username" />
+            <input type="text" formControlName="username_enrollment" placeholder="Create Username" />
           </div>
-          <marquee direction="down" behavior="slide" class="error"  *ngIf="signupForm.get('username').invalid && (signupForm.get('username').touched )">
-            <small *ngIf="signupForm.get('username').errors.required">Username is required</small>
-            <small *ngIf="signupForm.get('username').errors.pattern">Enter a valid username</small>
+          <span *ngIf="isTeacher">
+          <marquee  direction="down" behavior="slide" class="error"  *ngIf="signupForm1.get('username_enrollment').invalid && (signupForm1.get('username_enrollment').touched )">
+            <small *ngIf="signupForm1.get('username_enrollment').errors.required">Username is required</small>
+            <small *ngIf="signupForm1.get('username_enrollment').errors.pattern">Enter a valid username</small>
           </marquee>
-
-          <div class="input-field" [class.input-field-error]="signupForm.get('password').invalid && (signupForm.get('password').touched )">
+          </span>
+          <div class="input-field" *ngIf="!isTeacher" [class.input-field-error]="signupForm1.get('username_enrollment').invalid && (signupForm1.get('username_enrollment').touched )">
+            <i class="fas fa-fingerprint"></i>
+            <input type="text"  formControlName="username_enrollment" placeholder="Enrollment Number" required />
+          </div>
+          <span *ngIf="!isTeacher">
+          <marquee  direction="down" behavior="slide"  class="error"  *ngIf="signupForm1.get('username_enrollment').invalid && (signupForm1.get('username_enrollment').touched )">
+            <small *ngIf="signupForm1.get('username_enrollment').errors.required">Enrollment Number is required</small>
+            <small *ngIf="signupForm1.get('username_enrollment').errors.pattern">Enter a valid Enrollment Number</small>
+          </marquee>
+          </span>
+          <div class="input-field" [class.input-field-error]="signupForm1.get('password').invalid && (signupForm1.get('password').touched )">
             <i class="fas fa-lock"></i>
             <input type="password" formControlName="password" placeholder="Create Password" />
           </div>
-          <marquee direction="down" behavior="slide"  class="error" *ngIf="signupForm.get('password').invalid && (signupForm.get('password').touched )">
-            <small *ngIf="signupForm.get('password').errors.required">Password is required</small>
-            <small *ngIf="signupForm.get('password').errors.pattern">Enter a valid password</small>
+          <marquee direction="down" behavior="slide"  class="error" *ngIf="signupForm1.get('password').invalid && (signupForm1.get('password').touched )">
+            <small *ngIf="signupForm1.get('password').errors.required">Password is required</small>
+            <small *ngIf="signupForm1.get('password').errors.pattern">Enter a valid password</small>
           </marquee>
 
-          <div class="input-field" [class.input-field-error]="signupForm.get('password1').invalid && (signupForm.get('password1').touched )">
+          <div class="input-field" [class.input-field-error]="(signupForm1.get('confirm_pass').invalid && (signupForm1.get('confirm_pass').touched ))">
             <i class="fas fa-lock"></i>
-            <input type="password" formControlName="password1" placeholder="Confirm Password" />
+            <input type="password" formControlName="confirm_pass" pattern="{{signupForm1.get('password').value}}" placeholder="Confirm Password" />
           </div>
-          <marquee direction="down" behavior="slide"  class="error" *ngIf="signupForm.get('password1').invalid && (signupForm.get('password1').touched )">
-            <small *ngIf="signupForm.get('password1').errors.required">Password must be confirmed</small>
-            <small *ngIf="signupForm.get('password').value != signupForm.get('password1').value">Password not matched</small>
+          <marquee  direction="down" behavior="slide"  class="error" *ngIf="(signupForm1.get('confirm_pass').invalid && signupForm1.get('confirm_pass').touched )">
+            <small *ngIf="signupForm1.get('confirm_pass').errors.required">Password must be matched</small>
+            <small *ngIf='this.signupForm1.get("confirm_pass").errors.pattern'>Password not matched</small>
           </marquee>
 
           <input type="submit" class="btn" value="proceed >>" />
         </form>
 
-        <form action="#" style="display: none;" class="sign-up-form student-form">
+        <form id="student_form" action="#" [formGroup]="signupStudentForm" (ngSubmit)="saveStudentProfile()" style="display: none;" class="sign-up-form student-form">
           <h2 class="title">Create a profile</h2>
-            <div class="input-field" class="input-field" [class.input-field-error]="signupForm.get('fullname').invalid && (signupForm.get('fullname').touched )">
+            <div class="input-field" class="input-field" [class.input-field-error]="signupStudentForm.get('fullname').invalid && (signupStudentForm.get('fullname').touched )">
               <i class="fas fa-address-card"></i>
               <input type="text" formControlName="fullname" placeholder="Full Name"  required/>
             </div>
-            <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('fullname').invalid && (signupForm.get('fullname').touched )">
-              <small *ngIf="signupForm.get('fullname').errors.required">Name is required</small>
-              <small *ngIf="signupForm.get('fullname').errors.pattern">Enter valid name</small>
+            <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupStudentForm.get('fullname').invalid && (signupStudentForm.get('fullname').touched )">
+              <small *ngIf="signupStudentForm.get('fullname').errors.required">Name is required</small>
+              <small *ngIf="signupStudentForm.get('fullname').errors.pattern">Enter valid name</small>
             </marquee>
-            <div class="input-field" [class.input-field-error]="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
+            <div class="input-field" [class.input-field-error]="signupStudentForm.get('mobile').invalid && (signupStudentForm.get('mobile').touched )">
               <i class="fas fa-mobile"></i>
               <input list="code" id='select' placeholder="C.Code" value="+91" name="countryCode" size="3" />
               <datalist name="countryCode" id="code">
@@ -304,25 +306,25 @@
               </datalist>
               <input type="number" formControlName="mobile" placeholder="Mobile Number" />
             </div>
-            <marquee direction="down" behavior="slide" class="error"  *ngIf="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
-              <small *ngIf="signupForm.get('mobile').errors.required">Mobile number is required</small>
-              <small *ngIf="signupForm.get('mobile').errors.pattern">Enter a valid mobile number</small>
+            <marquee direction="down" behavior="slide" class="error"  *ngIf="signupStudentForm.get('mobile').invalid && (signupStudentForm.get('mobile').touched )">
+              <small *ngIf="signupStudentForm.get('mobile').errors.required">Mobile number is required</small>
+              <small *ngIf="signupStudentForm.get('mobile').errors.pattern">Enter a valid mobile number</small>
             </marquee>
-            <div class="input-field" [class.input-field-error]="signupForm.get('email').invalid && (signupForm.get('email').touched )">
+            <div class="input-field" [class.input-field-error]="signupStudentForm.get('email').invalid && (signupStudentForm.get('email').touched )">
               <i class="fas fa-envelope"></i>
               <input type="email" formControlName="email" placeholder="Email ID" required />
             </div>
-            <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('email').invalid && (signupForm.get('email').touched )">
-              <small *ngIf="signupForm.get('email').errors.required">Email is required</small>
-              <small *ngIf="signupForm.get('email').errors.email">Enter a valid email address</small>
+            <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupStudentForm.get('email').invalid && (signupStudentForm.get('email').touched )">
+              <small *ngIf="signupStudentForm.get('email').errors.required">Email is required</small>
+              <small *ngIf="signupStudentForm.get('email').errors.email">Enter a valid email address</small>
             </marquee>
-            <div class="input-field" disabled [class.input-field-error]="signupForm.get('enrollment').invalid && (signupForm.get('enrollment').touched )">
-              <i class="fas fa-fingerprint"></i>
-              <input type="text" formControlName="enrollment" placeholder="Enrollment Number" required />
-            </div>
             <div class="input-field" >
+              <i class="fas fa-fingerprint"></i>
+              <input type="text" formControlName="enrollment" placeholder="Enrollment Number" disabled required />
+            </div>
+            <div class="input-field" [class.input-field-error]="(signupStudentForm.get('department').invalid || (signupStudentForm.get('semester').invalid) || (signupStudentForm.get('section').invalid)) &&((signupStudentForm.get('year').touched ) || (signupStudentForm.get('semester').touched ) || (signupStudentForm.get('section').touched) )">
               <i class="fas fa-graduation-cap"></i>
-              <input style="width:110px;" list="dept" id='depts' class="sel" placeholder="Department" name="dept" size="3" />
+              <input style="width:110px;" list="dept" id='depts' class="sel" formControlName="department" placeholder="Department" name="dept" size="3" />
               <datalist name="list" id="dept">
                 <optgroup title="B.E./B.Tech.">
                   <option data-countryCode="CSE" value="CSE">Computer Science Engineering</option>
@@ -337,15 +339,15 @@
                   <option data-countryCode="AE" value="AE">Automobile Engineering</option>
                   <option data-countryCode="ChE" value="ChE">Chemical Engineering</option>
                 </optgroup>
-              </datalist>
-              <input style="width:55px; position:relative; margin-left: 55px;" list="yr" id='yrs' class="sel" placeholder="Year" name="yr" size="3" />
+              </datalist>    
+              <input style="width:55px; position:relative; margin-left: 55px;" formControlName="year" list="yr" id='yrs' class="sel" placeholder="Year" name="yr" size="3" />
               <datalist name="list" id="yr">
                   <option data-countryCode="I" value="I Yr."></option>
                   <option data-countryCode="II" value="II Yr."></option>
                   <option data-countryCode="III" value="III Yr."></option>
                   <option data-countryCode="IV" value="IV Yr."></option>
               </datalist>
-              <input style="width:90px; position:absolute; margin-left: 40px; left: 173px;" list="sem" id='sems' class="sel" placeholder="Semester" name="sem" size="3" />
+              <input style="width:90px; position:absolute; margin-left: 40px; left: 173px;" formControlName="semester" list="sem" id='sems' class="sel" placeholder="Semester" name="sem" size="3" />
               <datalist name="list" id="sem">
                   <option data-countryCode="I" value="I Sem."></option>
                   <option data-countryCode="II" value="II Sem."></option>
@@ -356,7 +358,7 @@
                   <option data-countryCode="VII" value="VII Sem."></option>
                   <option data-countryCode="VIII" value="VIII Sem."></option>
               </datalist>
-              <input style="width:78px; position:absolute; margin-left: 40px; left: 258px;" list="sec" id='secs' class="sel" placeholder="Section" name="sec" size="1" />
+              <input style="width:78px; position:absolute; margin-left: 40px; left: 258px;" formControlName="section" list="sec" id='secs' class="sel" placeholder="Section" name="sec" size="1" />
               <datalist name="list" id="sec">
                   <option data-countryCode="A" value="A Sec."></option>
                   <option data-countryCode="B" value="B Sec."></option>
@@ -364,19 +366,26 @@
                   <option data-countryCode="D" value="D Sec."></option>
               </datalist>
             </div>
+            <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupStudentForm.get('department').invalid && (signupStudentForm.get('semester').invalid) && (signupStudentForm.get('section').invalid) && (signupStudentForm.get('year').touched ) && (signupStudentForm.get('semester').touched ) && (signupStudentForm.get('section').touched )">
+              <small *ngIf="signupStudentForm.get('department').errors.required">Department is required</small>
+              <small *ngIf="signupStudentForm.get('year').errors.required">&nbsp;&nbsp;Year is required</small>
+              <small *ngIf="signupStudentForm.get('semester').errors.required">&nbsp;&nbsp;Semester is required</small>
+              <small *ngIf="signupStudentForm.get('section').errors.required">&nbsp;&nbsp;Section is required</small>
+            </marquee>
+            
             <input type="submit" class="btn" value="register" />
         </form>
-        <form style="display: none;" action="#" class="sign-up-form teacher-form">
+        <form id="teacher_form" style="display: none;" [formGroup]="signupTeacherForm" (ngSubmit)="saveTeacherProfile()" action="#" class="sign-up-form teacher-form">
           <h2 class="title">Create a profile</h2>
-          <div class="input-field" class="input-field" [class.input-field-error]="signupForm.get('fullname').invalid && (signupForm.get('fullname').touched )">
+          <div class="input-field" class="input-field" [class.input-field-error]="signupTeacherForm.get('fullname').invalid && (signupTeacherForm.get('fullname').touched )">
             <i class="fas fa-address-card"></i>
             <input type="text" formControlName="fullname" placeholder="Full Name"  required/>
           </div>
-          <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('fullname').invalid && (signupForm.get('fullname').touched )">
-            <small *ngIf="signupForm.get('fullname').errors.required">Name is required</small>
-            <small *ngIf="signupForm.get('fullname').errors.pattern">Enter valid name</small>
+          <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupTeacherForm.get('fullname').invalid && (signupTeacherForm.get('fullname').touched )">
+            <small *ngIf="signupTeacherForm.get('fullname').errors.required">Name is required</small>
+            <small *ngIf="signupTeacherForm.get('fullname').errors.pattern">Enter valid name</small>
           </marquee>
-          <div class="input-field" [class.input-field-error]="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
+          <div class="input-field" [class.input-field-error]="signupTeacherForm.get('mobile').invalid && (signupTeacherForm.get('mobile').touched )">
             <i class="fas fa-mobile"></i>
             <input list="code" id='select' placeholder="C.Code" value="+91" name="countryCode" size="3" />
             <datalist name="countryCode" id="code">
@@ -599,22 +608,27 @@
             </datalist>
             <input type="number" formControlName="mobile" placeholder="Mobile Number" />
           </div>
-          <marquee direction="down" behavior="slide" class="error"  *ngIf="signupForm.get('mobile').invalid && (signupForm.get('mobile').touched )">
-            <small *ngIf="signupForm.get('mobile').errors.required">Mobile number is required</small>
-            <small *ngIf="signupForm.get('mobile').errors.pattern">Enter a valid mobile number</small>
+          <marquee direction="down" behavior="slide" class="error"  *ngIf="signupTeacherForm.get('mobile').invalid && (signupTeacherForm.get('mobile').touched )">
+            <small *ngIf="signupTeacherForm.get('mobile').errors.required">Mobile number is required</small>
+            <small *ngIf="signupTeacherForm.get('mobile').errors.pattern">Enter a valid mobile number</small>
           </marquee>
-          <div class="input-field" [class.input-field-error]="signupForm.get('email').invalid && (signupForm.get('email').touched )">
+          <div class="input-field" [class.input-field-error]="signupTeacherForm.get('email').invalid && (signupTeacherForm.get('email').touched )">
             <i class="fas fa-envelope"></i>
             <input type="email" formControlName="email" placeholder="Email ID" required />
           </div>
-          <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupForm.get('email').invalid && (signupForm.get('email').touched )">
-            <small *ngIf="signupForm.get('email').errors.required">Email is required</small>
-            <small *ngIf="signupForm.get('email').errors.email">Enter a valid email address</small>
+          <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupTeacherForm.get('email').invalid && (signupTeacherForm.get('email').touched )">
+            <small *ngIf="signupTeacherForm.get('email').errors.required">Email is required</small>
+            <small *ngIf="signupTeacherForm.get('email').errors.email">Enter a valid email address</small>
           </marquee>
-          <div class="input-field" [class.input-field-error]="signupForm.get('facid').invalid && (signupForm.get('facid').touched )">
+          <div class="input-field" [class.input-field-error]="signupTeacherForm.get('facultyId').invalid && (signupTeacherForm.get('facultyId').touched )">
             <i class="fas fa-fingerprint"></i>
-            <input type="text" formControlName="facid" placeholder="Faculty ID" required />
+            <input type="text" formControlName="facultyId" placeholder="Faculty ID" required />
           </div>
+          <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupTeacherForm.get('facultyId').invalid && (signupTeacherForm.get('facultyId').touched )">
+            <small *ngIf="signupTeacherForm.get('facultyId').errors.required">Faculty Id is required</small>
+            <small *ngIf="signupTeacherForm.get('facultyId').errors.minlength">Enter a valid Faculty Id</small>
+          </marquee>
+          
           <input type="submit" class="btn" value="register" />
         </form>
       </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { formatCurrency } from '@angular/common';
 
 @Component({
   selector: 'app-log-reg',
@@ -8,12 +9,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LogRegComponent implements OnInit {
 
-  constructor() { 
-    matched:Boolean;
+  public isTeacher: boolean = false;
+  constructor() {
+    matched: Boolean;
   }
 
-  ngOnInit(): void {
 
+
+  ngOnInit(): void {
     const sign_in_btn = document.querySelector("#sign-in-btn");
     const sign_up_btn = document.querySelector("#sign-up-btn");
     const container = document.querySelector(".container");
@@ -26,58 +29,107 @@ export class LogRegComponent implements OnInit {
 
     sign_in_btn.addEventListener("click", () => {
       container.classList.remove("sign-up-mode");
-      this.signupForm.reset();
+      this.signupForm1.reset();
     });
 
+    this.signupForm1.controls["userType"].patchValue("Student")
   }
 
 
   loginForm = new FormGroup({
-    username:new FormControl(null,[Validators.required]),
-    password:new FormControl(null,[Validators.required])
-  })
-
-  signupForm = new FormGroup({
-    fullname:new FormControl(null,[Validators.required,Validators.pattern("[a-zA-Z]+[' ']{0,1}[a-zA-Z]+[' ']{0,1}[a-zA-Z]+"), Validators.nullValidator]),
-    enrollment:new FormControl(null,[Validators.required,Validators.pattern("[0-9]{4}[a-zA-Z]{2}[0-9]{6}")]),
-    email:new FormControl(null,[Validators.required,Validators.email]),
-    // ,Validators.pattern("[A-Za-z\d\._-]+@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,5})(\.[a-zA-Z]{2,5})?")
-    mobile:new FormControl(null,[Validators.required,Validators.pattern("[0-9]{10}")]),
-    username:new FormControl(null,[Validators.required,Validators.pattern("[a-zA-Z0-9]{3,}")]),
-    password:new FormControl(null,[Validators.required,Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,30}')]),
-    password1:new FormControl(null,[Validators.required])
+    username: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required])
   })
 
 
-  loginUser(){
-    if(this.loginForm.valid){
+
+  signupForm1 = new FormGroup({
+    userType: new FormControl("Student", [Validators.required]),
+    username_enrollment: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    password: new FormControl(null, [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]),
+    confirm_pass: new FormControl(null, [Validators.required])
+  })
+
+  signupStudentForm = new FormGroup({
+    fullname: new FormControl(null, [Validators.required, Validators.pattern("[a-zA-Z]+[' ']{0,1}[a-zA-Z]+[' ']{0,1}[a-zA-Z]+")]),
+    mobile: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    enrollment: new FormControl(null),
+    department: new FormControl(null, [Validators.required]),
+    year: new FormControl(null, [Validators.required]),
+    semester: new FormControl(null, [Validators.required]),
+    section: new FormControl(null, [Validators.required])
+  })
+
+  signupTeacherForm = new FormGroup({
+    fullname: new FormControl(null, [Validators.required, Validators.pattern("[a-zA-Z]+[' ']{0,1}[a-zA-Z]+[' ']{0,1}[a-zA-Z]+")]),
+    mobile: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    facultyId: new FormControl(null, [Validators.required,Validators.minLength(5)])
+  })
+
+  loginUser() {
+    if (this.loginForm.valid) {
       alert("it works");
-    } else{
+    } else {
       this.loginForm.markAllAsTouched()
     }
   }
 
-  checkType(){
-    let val = this.signupForm.get('type').value
-    if(val == 'student'){
-      alert('student')
+  changePlaceholderandValidators(event) {
+    this.signupForm1.controls["username_enrollment"].patchValue(null);
+    this.signupForm1.controls["password"].patchValue(null);
+    this.signupForm1.controls["confirm_pass"].patchValue(null);
+    this.signupForm1.controls["username_enrollment"].markAsUntouched();
+    this.signupForm1.controls["password"].markAsUntouched();
+    this.signupForm1.controls["confirm_pass"].markAsUntouched();
+
+    if (event.target.value == "teacher") {
+      this.isTeacher = true;
+      this.signupForm1.get('username_enrollment').setValidators([Validators.required, Validators.minLength(3), Validators.pattern("[a-zA-Z0-9]{3,}")])
     }
-    if(val == 'teacher'){
-      alert('teacher')
+    else {
+      this.signupForm1.controls[""]
+      this.isTeacher = false;
+      this.signupForm1.get('username_enrollment').setValidators([Validators.required, Validators.minLength(3), Validators.pattern("[0-9]{4}[A-Z]{2}[0-9]{6}")])
+    }
+    this.signupForm1.get("username_enrollment").updateValueAndValidity();
+  }
+
+
+
+  signUpUser() {
+    if (this.signupForm1.valid) {
+      if(this.signupForm1.get("userType").value=="teacher"){
+        document.getElementById("user_form").style.display="none"
+        document.getElementById("teacher_form").style.display="flex"
+      }
+      else{
+        document.getElementById("user_form").style.display="none"
+        document.getElementById("student_form").style.display="flex"
+      }
+    } else {
+      this.signupForm1.markAllAsTouched()
     }
   }
 
-  // isMatched(){
-  //   if(this.signupForm.get('password') == this.signupForm.get('password1').value){
-  //     matched
-  //   }
-  // }
-
-  signUpUser(){
-    if(this.signupForm.valid){
-      alert("it works");
-    } else{
-      this.signupForm.markAllAsTouched()
+  saveTeacherProfile() {
+    if(this.signupTeacherForm.valid)
+      alert("teacherSaved")
+    else{
+      this.signupTeacherForm.markAllAsTouched();
+      alert("error")
+    }
+  }
+  saveStudentProfile(){
+    this.signupStudentForm.controls["enrollment"].setValidators(null);
+    this.signupStudentForm.controls["enrollment"].updateValueAndValidity();
+    if(this.signupStudentForm.valid){
+      alert("studentSaved")
+    }
+    else{
+      this.signupStudentForm.markAllAsTouched();
+      alert("error")
     }
   }
 
