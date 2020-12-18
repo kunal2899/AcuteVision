@@ -17,7 +17,7 @@
         <a mat-list-item href="#"><span></span>Modify<br>Attendance</a>
         <a mat-list-item href="#"><span></span>Check<br>Attendance</a>
       </div>
-      <div *ngIf="!isStudent">
+      <div *ngIf="!isTeacher">
         <div class="profile">
           <img src="../../assets/idphoto.jpg" alt="">
           <div>
@@ -33,7 +33,7 @@
         <a mat-list-item href="#"><span></span>Check Attendance</a>
       </div>
       <a mat-list-item href="#"><span></span>About Us!</a>
-      <a mat-list-item href="#" class="logout"><i class="fas fa-sign-out" style="margin-right: 17px; margin-left: -34px;"></i>Logout</a>
+      <a mat-list-item href="#" class="logout" (click)="logout()"><i class="fas fa-sign-out" style="margin-right: 17px; margin-left: -34px;"></i>Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -50,7 +50,7 @@
     </mat-toolbar>
     <!-- Add Content Here -->
     <img src="../../assets/logo.jpeg" height="89%" style="position: absolute; left: 50%; transform: translateX(-50%); z-index: -3;" width="inherit" alt="">
-    <h1 class="greet">Hey, {{user_name.split(' ')[0]}}</h1>
+    <h1 class="greet">Hey, {{user_name?.split(' ')[0]}}</h1>
     <h1 class="greet welcome">Welcomes you!!</h1>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,7 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { formatCurrency } from '@angular/common';
+import { AuthenticationService } from '../service/authentication.service';
+import { User } from '../entities/user';
+import { RegUser } from '../entities/reg-user';
+import { Teacher } from '../entities/teacher';
+import { Router } from '@angular/router';
+import { Student } from '../entities/student';
+import { DatabaseService } from '../service/database.service';
+import { Response } from '../entities/response';
 
+
+export interface Semester {
+  semesterCode: string;
+  semesterValue: number;
+}
+// const spinnerSrc="../../assets/spinner.gif";
+const semesters: Semester[] = [
+  { "semesterCode": "I", "semesterValue": 1 },
+  { "semesterCode": "II", "semesterValue": 2 },
+  { "semesterCode": "III", "semesterValue": 3 },
+  { "semesterCode": "IV", "semesterValue": 4 },
+  { "semesterCode": "V", "semesterValue": 5 },
+  { "semesterCode": "VI", "semesterValue": 6 },
+  { "semesterCode": "VII", "semesterValue": 7 },
+  { "semesterCode": "VIII", "semesterValue": 8 },
+]
 @Component({
   selector: 'app-log-reg',
   templateUrl: './log-reg.component.html',
@@ -9,12 +33,14 @@ import { formatCurrency } from '@angular/common';
 })
 export class LogRegComponent implements OnInit {
 
+  public availableSemester: Semester[];
+  public valueType: boolean
   public isTeacher: boolean = false;
-  constructor() {
+  public showSpinner: boolean = false;
+  constructor(public authService: AuthenticationService, public dataService: DatabaseService, public _router: Router) {
+    this.valueType = true;
     matched: Boolean;
   }
-
-
 
   ngOnInit(): void {
     const sign_in_btn = document.querySelector("#sign-in-btn");
@@ -25,14 +51,25 @@ export class LogRegComponent implements OnInit {
     sign_up_btn.addEventListener("click", () => {
       container.classList.add("sign-up-mode");
       this.loginForm.reset();
+      document.getElementById("user_form").style.display = "flex";
+      document.getElementById("student_form").style.display = "none";
+      document.getElementById("teacher_form").style.display = "none";
+      this.valueType = true;
     });
 
     sign_in_btn.addEventListener("click", () => {
       container.classList.remove("sign-up-mode");
-      this.signupForm1.reset();
+      this.signupForm1.get("username_enrollment").reset();
+      this.signupForm1.get("password").reset();
+      this.signupForm1.get("confirm_pass").reset();
+      this.signupStudentForm.reset();
+      this.signupTeacherForm.reset();
+      document.getElementById("user_form").style.display = "flex"
+      document.getElementById("student_form").style.display = "none"
+      document.getElementById("teacher_form").style.display = "none"
+      this.valueType = true;
     });
 
-    this.signupForm1.controls["userType"].patchValue("Student")
   }
 
 
@@ -65,12 +102,68 @@ export class LogRegComponent implements OnInit {
     fullname: new FormControl(null, [Validators.required, Validators.pattern("[a-zA-Z]+[' ']{0,1}[a-zA-Z]+[' ']{0,1}[a-zA-Z]+")]),
     mobile: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    facultyId: new FormControl(null, [Validators.required,Validators.minLength(5)])
+    facultyId: new FormControl(null, [Validators.required, Validators.minLength(5)])
   })
 
   loginUser() {
+    this.showSpinner = true
     if (this.loginForm.valid) {
-      alert("it works");
+      this.authService.logoutUser();
+      let user = new User(this.loginForm.get("username").value, this.loginForm.get("password").value);
+      this.authService.loginUser(user).then(
+        data => {
+          sessionStorage.setItem("USERID", data.username);
+          if (data.is_student) {
+            sessionStorage.setItem("USERTYPE", "STUDENT");
+          }
+          else if (data.is_teacher) {
+            sessionStorage.setItem("USERTYPE", "TEACHER");
+          }
+          if (data.is_pending) {
+            sessionStorage.setItem("PENDING", "TRUE");
+          }
+          else {
+            sessionStorage.setItem("PENDING", "FALSE");
+          }
+          if (!data.Registered) {
+            setTimeout(() => {
+              this.loginForm.reset();
+              const container = document.querySelector(".container");
+              container.classList.remove("sign-in-mode");
+              container.classList.add("sign-up-mode");
+              this.showSpinner = false;
+            }, 2000);
+            if (data.is_student) {
+              document.getElementById("user_form").style.display = "none";
+              document.getElementById("student_form").style.display = "flex";
+              this.signupStudentForm.get("enrollment").patchValue(data.username);
+              document.getElementById("teacher_form").style.display = "none";
+            }
+            else {
+              document.getElementById("user_form").style.display = "none";
+              document.getElementById("student_form").style.display = "none";
+              this.signupTeacherForm.get("facultyId").patchValue(data.username);
+              document.getElementById("teacher_form").style.display = "flex";
+            }
+          } else {
+            if (data.is_student) {
+              this.dataService.getStudent(data.username).then(student => {
+                sessionStorage.setItem("NAME", student.Name)
+                this._router.navigate(['dashboard']);
+              })
+            } else {
+              this.dataService.getTeacher(data.username).then(teacher => {
+                sessionStorage.setItem("NAME", teacher.Name);
+                this._router.navigate(['dashboard']);
+              });
+            }
+            // sessionStorage.getItem("NAME");
+          }
+        }
+      ).catch(err => {
+        console.log(err.message);
+        this.showSpinner = false;
+      });
     } else {
       this.loginForm.markAllAsTouched()
     }
@@ -96,42 +189,82 @@ export class LogRegComponent implements OnInit {
     this.signupForm1.get("username_enrollment").updateValueAndValidity();
   }
 
-
+  getAvailableSemester(event) {
+    let yearValue = parseInt(event.target.value);
+    this.availableSemester = semesters.slice((yearValue - 1) * 2, (yearValue - 1) * 2 + 1);
+  }
 
   signUpUser() {
+    this.showSpinner = true;
+    let isTeacher: boolean = this.signupForm1.get("userType").value == "teacher" ? true : false
+    // alert(isTeacher);
+    let user = new RegUser(this.signupForm1.get("username_enrollment").value, this.signupForm1.get("password").value, this.signupForm1.get("confirm_pass").value, isTeacher, !isTeacher)
     if (this.signupForm1.valid) {
-      if(this.signupForm1.get("userType").value=="teacher"){
-        document.getElementById("user_form").style.display="none"
-        document.getElementById("teacher_form").style.display="flex"
-      }
-      else{
-        document.getElementById("user_form").style.display="none"
-        document.getElementById("student_form").style.display="flex"
-      }
-    } else {
-      this.signupForm1.markAllAsTouched()
+      // alert(user.isTeacher);
+      this.authService.registerUser(user).then(data => {
+        this.showSpinner = false;
+        document.getElementById("user_form").style.display = "none";
+
+        alert(data.username);
+        if (data.is_teacher) {
+          alert(data.is_teacher);
+          document.getElementById("teacher_form").style.display = "flex";
+          this.signupTeacherForm.get("facultyId").patchValue(data.username);
+        } else {
+          alert(data.is_teacher);
+          document.getElementById("student_form").style.display = "flex";
+          this.signupStudentForm.get("enrollment").patchValue(data.username);
+        }
+        alert("userCreated")
+      })
+    }
+    else {
+      this.showSpinner = false;
+      this.signupForm1.markAllAsTouched();
     }
   }
 
   saveTeacherProfile() {
-    if(this.signupTeacherForm.valid)
-      alert("teacherSaved")
-    else{
+    this.showSpinner = true;
+    this.signupTeacherForm.controls["facultyId"].setValidators(null);
+    this.signupTeacherForm.controls["facultyId"].updateValueAndValidity();
+    let teacher = new Teacher(this.signupTeacherForm.get("fullname").value, this.signupTeacherForm.get("mobile").value, this.signupTeacherForm.get("email").value, this.signupTeacherForm.get("facultyId").value);
+    if (this.signupTeacherForm.valid) {
+      this.authService.saveTeacherProfile(teacher).then((data: Response) => {
+        // this.showSpinner = false;
+
+        this.dataService.getTeacher(data.username).then(teacher => {
+          sessionStorage.setItem("NAME", teacher.Name);
+          this._router.navigate(["/dashboard"]);
+        });
+      }).catch(err => {
+        alert(err.error);
+        this.showSpinner = false;
+      });
+    }
+    else {
       this.signupTeacherForm.markAllAsTouched();
-      alert("error")
     }
   }
-  saveStudentProfile(){
+
+  saveStudentProfile() {
+    this.showSpinner = true;
     this.signupStudentForm.controls["enrollment"].setValidators(null);
     this.signupStudentForm.controls["enrollment"].updateValueAndValidity();
-    if(this.signupStudentForm.valid){
-      alert("studentSaved")
+    if (this.signupStudentForm.valid) {
+      let student = new Student(this.signupStudentForm.get("fullname").value, this.signupStudentForm.get("mobile").value, this.signupStudentForm.get("email").value, this.signupStudentForm.get("enrollment").value, this.signupStudentForm.get("year").value, this.signupStudentForm.get("semester").value, this.signupStudentForm.get("section").value, this.signupStudentForm.get("department").value);
+      this.authService.saveStudentProfile(student).then((data: Response) => {
+        this.showSpinner = false;
+        this.dataService.getStudent(data.username).then(student => {
+          sessionStorage.setItem("NAME", student.Name);
+          this._router.navigate(["/dashboard"]);
+        });
+
+      }).catch(err => alert(err.error));
     }
-    else{
+    else {
       this.signupStudentForm.markAllAsTouched();
-      alert("error")
+      alert("error");
     }
   }
-
-
 }

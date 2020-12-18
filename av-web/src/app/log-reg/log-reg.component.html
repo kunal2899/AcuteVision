@@ -19,7 +19,10 @@
             <small *ngIf="loginForm.get('password').errors.required">Password is required</small>
             <!-- <div *ngIf="loginForm.get('password').errors.minlength">Password Is Not Valid</div> -->
           </marquee>
-          <input style="margin-top: 20px;" type="submit" value="Login" class="btn solid" />
+          <button style="margin-top: 20px;" type="submit"  class="btn solid">
+          <span *ngIf="!showSpinner else show">Login</span>
+          <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+          </button>
         </form>
 
         <form id="user_form" style="display: flex;"  [formGroup]="signupForm1" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
@@ -27,7 +30,7 @@
           <div class="input-field select-type">
             <label for="">I am</label>
             <select name="type" id="type" formControlName="userType" (change)="changePlaceholderandValidators($event);">
-              <option value="student" [selected] ="true">Student</option>
+              <option value="student" [selected] ="valueType">Student</option>
               <option value="teacher" >Teacher</option>
             </select>
           </div>
@@ -70,8 +73,11 @@
             <small *ngIf='this.signupForm1.get("confirm_pass").errors.pattern'>Password not matched</small>
           </marquee>
 
-          <input type="submit" class="btn" value="proceed >>" />
-        </form>
+          <button style="margin-top: 20px;" type="submit"  class="btn solid">
+            <span *ngIf="!showSpinner else show">proceed >></span>
+            <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+            </button>
+          </form>
 
         <form id="student_form" action="#" [formGroup]="signupStudentForm" (ngSubmit)="saveStudentProfile()" style="display: none;" class="sign-up-form student-form">
           <h2 class="title">Create a profile</h2>
@@ -340,30 +346,32 @@
                   <option data-countryCode="ChE" value="ChE">Chemical Engineering</option>
                 </optgroup>
               </datalist>    
-              <input style="width:55px; position:relative; margin-left: 55px;" formControlName="year" list="yr" id='yrs' class="sel" placeholder="Year" name="yr" size="3" />
+              <input style="width:55px; position:relative; margin-left: 55px;" (change)="getAvailableSemester($event)" formControlName="year" list="yr" id='yrs' class="sel" placeholder="Year" name="yr" size="3" />
               <datalist name="list" id="yr">
-                  <option data-countryCode="I" value="I Yr."></option>
-                  <option data-countryCode="II" value="II Yr."></option>
-                  <option data-countryCode="III" value="III Yr."></option>
-                  <option data-countryCode="IV" value="IV Yr."></option>
+                  <option data-countryCode="I" value="1"></option>
+                  <option data-countryCode="II" value="2"></option>
+                  <option data-countryCode="III" value="3"></option>
+                  <option data-countryCode="IV" value="4"></option>
               </datalist>
               <input style="width:90px; position:absolute; margin-left: 40px; left: 173px;" formControlName="semester" list="sem" id='sems' class="sel" placeholder="Semester" name="sem" size="3" />
               <datalist name="list" id="sem">
-                  <option data-countryCode="I" value="I Sem."></option>
-                  <option data-countryCode="II" value="II Sem."></option>
-                  <option data-countryCode="III" value="III Sem."></option>
-                  <option data-countryCode="IV" value="IV Sem."></option>
-                  <option data-countryCode="V" value="V Sem."></option>
-                  <option data-countryCode="VI" value="VI Sem."></option>
-                  <option data-countryCode="VII" value="VII Sem."></option>
-                  <option data-countryCode="VIII" value="VIII Sem."></option>
+                  <!-- <option > -->
+                    <!-- <option *ngFor="let semester from availableSemester" [data-countryCode]="semester.code" [value]="semester.value"></option> -->
+                  <option data-countryCode="I" value="1"></option>
+                  <option data-countryCode="II" value="2"></option>
+                  <option data-countryCode="III" value="3"></option>
+                  <option data-countryCode="IV" value="4"></option>
+                  <option data-countryCode="V" value="5"></option>
+                  <option data-countryCode="VI" value="6"></option>
+                  <option data-countryCode="VII" value="7"></option>
+                  <option data-countryCode="VIII" value="8"></option>
               </datalist>
               <input style="width:78px; position:absolute; margin-left: 40px; left: 258px;" formControlName="section" list="sec" id='secs' class="sel" placeholder="Section" name="sec" size="1" />
               <datalist name="list" id="sec">
-                  <option data-countryCode="A" value="A Sec."></option>
-                  <option data-countryCode="B" value="B Sec."></option>
-                  <option data-countryCode="C" value="C Sec."></option>
-                  <option data-countryCode="D" value="D Sec."></option>
+                  <option data-countryCode="A" value="A"></option>
+                  <option data-countryCode="B" value="B"></option>
+                  <option data-countryCode="C" value="C"></option>
+                  <option data-countryCode="D" value="D"></option>
               </datalist>
             </div>
             <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupStudentForm.get('department').invalid && (signupStudentForm.get('semester').invalid) && (signupStudentForm.get('section').invalid) && (signupStudentForm.get('year').touched ) && (signupStudentForm.get('semester').touched ) && (signupStudentForm.get('section').touched )">
@@ -372,8 +380,10 @@
               <small *ngIf="signupStudentForm.get('semester').errors.required">&nbsp;&nbsp;Semester is required</small>
               <small *ngIf="signupStudentForm.get('section').errors.required">&nbsp;&nbsp;Section is required</small>
             </marquee>
-            
-            <input type="submit" class="btn" value="register" />
+            <button style="margin-top: 20px;" type="submit"  class="btn solid">
+              <span *ngIf="!showSpinner else show">Register</span>
+              <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+              </button>
         </form>
         <form id="teacher_form" style="display: none;" [formGroup]="signupTeacherForm" (ngSubmit)="saveTeacherProfile()" action="#" class="sign-up-form teacher-form">
           <h2 class="title">Create a profile</h2>
@@ -622,15 +632,18 @@
           </marquee>
           <div class="input-field" [class.input-field-error]="signupTeacherForm.get('facultyId').invalid && (signupTeacherForm.get('facultyId').touched )">
             <i class="fas fa-fingerprint"></i>
-            <input type="text" formControlName="facultyId" placeholder="Faculty ID" required />
+            <input type="text" formControlName="facultyId" disabled placeholder="Faculty ID" />
           </div>
           <marquee direction="down" behavior="slide"  class="error"  *ngIf="signupTeacherForm.get('facultyId').invalid && (signupTeacherForm.get('facultyId').touched )">
             <small *ngIf="signupTeacherForm.get('facultyId').errors.required">Faculty Id is required</small>
             <small *ngIf="signupTeacherForm.get('facultyId').errors.minlength">Enter a valid Faculty Id</small>
           </marquee>
           
-          <input type="submit" class="btn" value="register" />
-        </form>
+          <button style="margin-top: 20px;" type="submit"  class="btn solid">
+            <span *ngIf="!showSpinner else show">Register</span>
+            <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+            </button>
+         </form>
       </div>
     </div>
 
