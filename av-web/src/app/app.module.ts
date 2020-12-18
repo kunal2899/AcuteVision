@@ -17,12 +17,16 @@ import { MatListModule } from '@angular/material/list';
 import { AuthenticationService } from './service/authentication.service';
 import { DatabaseService } from './service/database.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './profile/profile.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogRegComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

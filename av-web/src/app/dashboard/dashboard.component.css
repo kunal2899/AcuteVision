@@ -88,6 +88,7 @@
   font-size: .7rem;
   opacity: .5;
   transition: .25s;
+  outline: none;
 }
 
 .sidenav .profile h4:hover{
@@ -149,21 +150,6 @@ mat-nav-list a.menu-active
   font-family: 'Poppins';
   letter-spacing: 1.5px;
   margin-left: 10px;
-}
-
-.sidenav-container .greet{
-  font-family: 'Poppins';
-  display: flex;
-  justify-content: center;
-  margin-top: 70px;
-  font-size: 3.2em;
-  font-weight: 600;
-}
-
-.sidenav-container .welcome{
-  margin-top: 280px;
-  font-size: 2em;
-  font-weight: 600;
 }
 
 @media screen and (max-width: 600px){
