@@ -106,8 +106,8 @@ export class LogRegComponent implements OnInit {
   })
 
   loginUser() {
-    this.showSpinner = true
     if (this.loginForm.valid) {
+      this.showSpinner = true
       this.authService.logoutUser();
       let user = new User(this.loginForm.get("username").value, this.loginForm.get("password").value);
       this.authService.loginUser(user).then(
@@ -149,12 +149,12 @@ export class LogRegComponent implements OnInit {
             if (data.is_student) {
               this.dataService.getStudent(data.username).then(student => {
                 sessionStorage.setItem("NAME", student.Name)
-                this._router.navigate(['dashboard']);
+                this._router.navigate(['dashboard/home']);
               })
             } else {
               this.dataService.getTeacher(data.username).then(teacher => {
                 sessionStorage.setItem("NAME", teacher.Name);
-                this._router.navigate(['dashboard']);
+                this._router.navigate(['dashboard/home']);
               });
             }
             // sessionStorage.getItem("NAME");
@@ -165,6 +165,7 @@ export class LogRegComponent implements OnInit {
         this.showSpinner = false;
       });
     } else {
+      this.showSpinner = false;
       this.loginForm.markAllAsTouched()
     }
   }

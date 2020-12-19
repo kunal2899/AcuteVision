@@ -21,7 +21,7 @@
           </marquee>
           <button style="margin-top: 20px;" type="submit"  class="btn solid">
           <span *ngIf="!showSpinner else show">Login</span>
-          <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+          <ng-template #show><img height="40px" width="40px" src="../../assets/doublering.gif"></ng-template>
           </button>
         </form>
 
@@ -75,7 +75,7 @@
 
           <button style="margin-top: 20px;" type="submit"  class="btn solid">
             <span *ngIf="!showSpinner else show">proceed >></span>
-            <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+            <ng-template #show><img height="40px" width="40px" src="../../assets/doublering.gif"></ng-template>
             </button>
           </form>
 
@@ -382,7 +382,7 @@
             </marquee>
             <button style="margin-top: 20px;" type="submit"  class="btn solid">
               <span *ngIf="!showSpinner else show">Register</span>
-              <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+              <ng-template #show><img height="40px" width="40px" src="../../assets/doublering.gif"></ng-template>
               </button>
         </form>
         <form id="teacher_form" style="display: none;" [formGroup]="signupTeacherForm" (ngSubmit)="saveTeacherProfile()" action="#" class="sign-up-form teacher-form">
@@ -641,7 +641,7 @@
           
           <button style="margin-top: 20px;" type="submit"  class="btn solid">
             <span *ngIf="!showSpinner else show">Register</span>
-            <ng-template #show><img src="../../assets/spinner.gif"></ng-template>
+            <ng-template #show><img height="40px" width="40px" src="../../assets/doublering.gif"></ng-template>
             </button>
          </form>
       </div>
