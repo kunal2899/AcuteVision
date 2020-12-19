@@ -37,8 +37,9 @@ export class DashboardComponent implements OnInit{
     }
   }
 
-  logout(){
-    this.authService.logoutUser();
-  }
+  // logout(){
+  //   this.authService.logoutUser();
+  //   this._router.navigate(["/log-reg"]);
+  // }
 
 }

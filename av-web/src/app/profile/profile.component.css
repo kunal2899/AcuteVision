@@ -134,7 +134,26 @@
     transition: 0.5s;
     display: inline-block;
   }
+
+  .input-field-error {
+    max-width: 380px;
+    width: 100%;
+    /* background-color: rgba(211, 36, 36, 0.212); */
+    box-shadow: 0 0 30px rgba(250, 0, 0, 0.685);
+    font-size: 10px;
+    margin: 10px 0;
+    height: 55px;
+    border-radius: 55px;
+    /* border:1px solid red; */
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+    color:black;
+    overflow: hidden;
+  }
   
+
   .btn:hover {
     background-color: white;
     color: black;

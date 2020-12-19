@@ -9,9 +9,10 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
-  user_name = "Kunal Jain"
+  user_name :string;
 
   ngOnInit(): void {
+    this.user_name=sessionStorage.getItem("NAME");
   }
 
 }
