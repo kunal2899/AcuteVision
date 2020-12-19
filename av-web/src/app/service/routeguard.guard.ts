@@ -15,8 +15,8 @@ export class RouteguardGuard implements CanActivate {
       return true;
     }
     else{
-      alert("Seems You Have Not Logged In Yet!!/nPlease Log In First");
-      this.router.navigate(['log-reg']);
+      // alert("Seems You Have Not Logged In Yet!!/nPlease Log In First");
+      this.router.navigate(['forbidden'])
       return false;
     }
   }

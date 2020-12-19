@@ -107,8 +107,8 @@ export class LogRegComponent implements OnInit {
   })
 
   loginUser() {
-    this.showSpinner = true
     if (this.loginForm.valid) {
+      this.showSpinner = true
       this.authService.logoutUser();
       let user = new User(this.loginForm.get("username").value, this.loginForm.get("password").value);
       this.authService.loginUser(user).then(
@@ -166,6 +166,7 @@ export class LogRegComponent implements OnInit {
         this.showSpinner = false;
       });
     } else {
+      this.showSpinner = false;
       this.loginForm.markAllAsTouched()
     }
   }
