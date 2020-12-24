@@ -22,7 +22,7 @@
           <img src="../../assets/idphoto.jpg" alt="">
           <div>
             <h3>{{user_name}}</h3>
-            <h4>Go to profile >></h4>
+            <h4 routerLink="profile">Go to profile >></h4>
           </div>
         </div>
         <div class="attendance">
@@ -33,7 +33,7 @@
         <a mat-list-item href="#"><span></span>Check Attendance</a>
       </div>
       <a mat-list-item href="#"><span></span>About Us!</a>
-      <a mat-list-item href="#" class="logout" (click)="logout()"><i class="fas fa-sign-out" style="margin-right: 17px; margin-left: -34px;"></i>Logout</a>
+      <a mat-list-item href="#" class="logout" routerLink="/log-reg"><i class="fas fa-sign-out" style="margin-right: 17px; margin-left: -34px;"></i>Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

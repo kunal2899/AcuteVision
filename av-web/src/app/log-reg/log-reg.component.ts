@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Student } from '../entities/student';
 import { DatabaseService } from '../service/database.service';
 import { Response } from '../entities/response';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 export interface Semester {
@@ -37,7 +38,7 @@ export class LogRegComponent implements OnInit {
   public valueType: boolean
   public isTeacher: boolean = false;
   public showSpinner: boolean = false;
-  constructor(public authService: AuthenticationService, public dataService: DatabaseService, public _router: Router) {
+  constructor(public authService: AuthenticationService, public dataService: DatabaseService, public _router: Router,public snackBar:MatSnackBar) {
     this.valueType = true;
     matched: Boolean;
   }
@@ -201,22 +202,29 @@ export class LogRegComponent implements OnInit {
     // alert(isTeacher);
     let user = new RegUser(this.signupForm1.get("username_enrollment").value, this.signupForm1.get("password").value, this.signupForm1.get("confirm_pass").value, isTeacher, !isTeacher)
     if (this.signupForm1.valid) {
-      // alert(user.isTeacher);
       this.authService.registerUser(user).then(data => {
+        sessionStorage.setItem("USERID",data.username);
+        if (data.is_student) {
+          sessionStorage.setItem("USERTYPE", "STUDENT");
+        }
+        else if (data.is_teacher) {
+          sessionStorage.setItem("USERTYPE", "TEACHER");
+        }
+        if (data.is_pending) {
+          sessionStorage.setItem("PENDING", "TRUE");
+        }
+        else {
+          sessionStorage.setItem("PENDING", "FALSE");
+        }
         this.showSpinner = false;
         document.getElementById("user_form").style.display = "none";
-
-        alert(data.username);
         if (data.is_teacher) {
-          alert(data.is_teacher);
           document.getElementById("teacher_form").style.display = "flex";
           this.signupTeacherForm.get("facultyId").patchValue(data.username);
         } else {
-          alert(data.is_teacher);
           document.getElementById("student_form").style.display = "flex";
           this.signupStudentForm.get("enrollment").patchValue(data.username);
         }
-        alert("userCreated")
       })
     }
     else {
@@ -232,11 +240,16 @@ export class LogRegComponent implements OnInit {
     let teacher = new Teacher(this.signupTeacherForm.get("fullname").value, this.signupTeacherForm.get("mobile").value, this.signupTeacherForm.get("email").value, this.signupTeacherForm.get("facultyId").value);
     if (this.signupTeacherForm.valid) {
       this.authService.saveTeacherProfile(teacher).then((data: Response) => {
-        // this.showSpinner = false;
-
         this.dataService.getTeacher(data.username).then(teacher => {
           sessionStorage.setItem("NAME", teacher.Name);
-          this._router.navigate(["/dashboard"]);
+          setTimeout(()=>{this.snackBar.open("Redirecting To Dashboard", "", {
+            duration: 2000,
+            horizontalPosition: "center",
+            verticalPosition: "top",
+            panelClass: ['.mat-snack-bar-container']
+          })
+          },2000);
+          this._router.navigate(["/dashboard/home"]);
         });
       }).catch(err => {
         alert(err.error);
@@ -258,7 +271,7 @@ export class LogRegComponent implements OnInit {
         this.showSpinner = false;
         this.dataService.getStudent(data.username).then(student => {
           sessionStorage.setItem("NAME", student.Name);
-          this._router.navigate(["/dashboard"]);
+          this._router.navigate(["/dashboard/home"]);
         });
 
       }).catch(err => alert(err.error));

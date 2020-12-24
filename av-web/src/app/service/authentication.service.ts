@@ -21,10 +21,10 @@ export class AuthenticationService {
     // let header = 
     let options = {
       headers: new HttpHeaders({
-        'ACCESS-CONTROL-ALLOW-ORIGIN':'http://127.0.0.1:8000',
-        'CORS_ALLOW_CREDENTIALS':'true',
-        "Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept, Authorization",
-        'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT",
+        // 'ACCESS-CONTROL-ALLOW-ORIGIN':'http://127.0.0.1:8000',
+        // 'CORS_ALLOW_CREDENTIALS':'true',
+        // "Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept, Authorization",
+        // 'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT",
       })
     }
     let formData = new FormData();
@@ -43,22 +43,22 @@ export class AuthenticationService {
     userDto.append("is_teacher", JSON.stringify(user.isTeacher));
     let options = {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT"
+        // 'Access-Control-Allow-Origin':'*',
+        // 'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT"
       })
     }
-    this.http.post<any>(`${this.url}/api/register`, userDto, options).subscribe(data => {
-      let temp = new User(data.username, user.password1);
-      sessionStorage.setItem("ResponseData", JSON.stringify(data))
-      this.loginUser(temp).then(data => alert("USerlogedin"));
-    })
+    // this.http.post<any>(`${this.url}/api/register`, userDto, options).subscribe(data => {
+    //   let temp = new User(data.username, user.password1);
+    //   sessionStorage.setItem("ResponseData", JSON.stringify(data))
+    //   this.loginUser(temp).then(data => alert("USerlogedin"));
+    // })
     return this.http.post<any>(`${this.url}/api/register`, userDto, options).toPromise();
   }
 
   saveStudentProfile(student_det: Student) {
-    let bool: boolean = false
+    let bool: boolean = false;
     let studentDto = new FormData();
-    alert("" + (student_det.department + "-" + student_det.semster + "" + student_det.section))
+    // alert("" + (student_det.department + "-" + student_det.semster + "" + student_det.section))
     studentDto.append("Name", student_det.name);
     studentDto.append("Mobile", "" + student_det.mobile);
     studentDto.append("Email", student_det.email);
@@ -69,8 +69,8 @@ export class AuthenticationService {
     studentDto.append("Section", "" + (student_det.department + "-" + student_det.semster + "" + student_det.section));
     let options = {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT"
+        // 'Access-Control-Allow-Origin':'*',
+        // 'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT"
       })
     }
     // this.http.post(`${this.url}/api/profile/student`, studentDto, { headers: httpheaders }).subscribe(
@@ -90,8 +90,8 @@ export class AuthenticationService {
     teacherDto.append("Id", teacher.facultyId);
     let options = {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT"
+        // 'Access-Control-Allow-Origin':'*',
+        // 'Access-Control-Allow-Methods':"GET, POST, OPTIONS, DELETE, PUT"
       })
     }
     // this.http.post(`${this.url}/api/profile/teacher`, teacherDto, { headers: httpheaders }).subscribe(
@@ -121,7 +121,8 @@ export class AuthenticationService {
   }
 
   logoutUser() {
-    sessionStorage.removeItem("USERNAME");
+    sessionStorage.removeItem("USERID");
+    sessionStorage.removeItem("NAME");
     sessionStorage.removeItem("USERTYPE");
     sessionStorage.removeItem("PENDING");
   }

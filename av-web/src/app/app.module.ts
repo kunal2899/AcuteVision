@@ -13,6 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import{ MatSnackBarModule} from '@angular/material/snack-bar'
 import { MatListModule } from '@angular/material/list';
 import { AuthenticationService } from './service/authentication.service';
 import { DatabaseService } from './service/database.service';
@@ -55,6 +56,7 @@ import { NotVerifiedComponent } from './not-verified/not-verified.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSnackBarModule,
   ],
   providers: [AuthenticationService,DatabaseService],
   bootstrap: [AppComponent]
