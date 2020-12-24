@@ -1,0 +1,41 @@
+<div class="container" *ngIf="!result_fetched">
+    <h1>Take Attendance</h1>
+    <div class="input-field select-type">
+        <label for="">Department</label>
+        <select name="dept" id="dept">
+          <option *ngFor="let x of dept" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">Semester</label>
+        <select name="sem" id="sem">
+          <option *ngFor="let x of sem" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">Section</label>
+        <select name="sec" id="sec">
+          <option *ngFor="let x of sec" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">Subject Code</label>
+        <select name="subject" id="subject">
+          <option *ngFor="let x of sub" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">Class Code</label>
+        <select name="class" id="class">
+          <option *ngFor="let x of class" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <input type="button" class="btn" (click)="takeAttendance()" value="submit">
+</div>
+<div class="result container" *ngIf="result_fetched">
+  <div></div>
+  <h1>Total Present : {{present}}</h1>
+  <h1>Total Absent : {{absent}}</h1>
+  <h1>Unmatched : {{total - present}}</h1>
+  <input type="button" class="btn" (click)="take()" value="take again">
+</div>

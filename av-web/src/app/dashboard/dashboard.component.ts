@@ -13,7 +13,7 @@ import { DatabaseService } from '../service/database.service';
 })
 export class DashboardComponent implements OnInit{
 
-  user_name :string;
+  user_name: string;
   isTeacher:boolean;
   attendance = 75;
 
@@ -35,6 +35,27 @@ export class DashboardComponent implements OnInit{
     else{
       this.isTeacher=true;
     }
+
+    // $(document).ready(function () {
+    //   $('mat-nav-list a').on('click',function(){
+    //     $(this).addClass('menu-active').siblings().removeClass('menu-active');
+    //     $('.sel a').each(function(){
+    //       $(this).removeClass('link-active').siblings().removeClass('link-active');
+    //     });
+    //   });
+
+    //   $('.sel a').on('click',function(){
+    //       $(this).addClass('link-active').siblings().removeClass('link-active');
+    //       $('mat-nav-list a').each(function(){
+    //         $(this).removeClass('menu-active').siblings().removeClass('menu-active');
+    //       });
+    //   });
+    //   var path = window.location.href;
+    //   $('mat-nav-list a').each(function(){
+    //     if(this.href === path){
+    //       $(this).addClass('menu-active').siblings().removeClass('menu-active');
+    //     }
+    //   });
   }
 
   logout(){

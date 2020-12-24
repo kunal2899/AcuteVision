@@ -20,6 +20,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
+import { ModifyAttendanceComponent } from './modify-attendance/modify-attendance.component';
+import { CheckAttendanceTComponent } from './check-attendance-t/check-attendance-t.component';
+import { CheckAttendanceSComponent } from './check-attendance-s/check-attendance-s.component';
+import { NotVerifiedComponent } from './not-verified/not-verified.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +34,13 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     DashboardComponent,
     ProfileComponent,
     HomeComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    PageNotFoundComponent,
+    TakeAttendanceComponent,
+    ModifyAttendanceComponent,
+    CheckAttendanceTComponent,
+    CheckAttendanceSComponent,
+    NotVerifiedComponent
   ],
   imports: [
     BrowserModule,
