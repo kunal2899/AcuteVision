@@ -1,1 +1,53 @@
-<p>check-attendance-t works!</p>
+<div class="container" *ngIf="!result_fetched">
+    <h1>Check Attendance</h1>
+    <div class="input-field select-type">
+        <label for="">Department</label>
+        <select name="dept" id="dept">
+          <option *ngFor="let x of dept" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">Semester</label>
+        <select name="sem" id="sem">
+          <option *ngFor="let x of sem" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">Section</label>
+        <select name="sec" id="sec">
+          <option *ngFor="let x of sec" [value]='x'>{{x}}</option>
+        </select>
+      </div>
+      <div class="input-field select-type">
+        <label for="">From date</label>
+        <input type="date">
+      </div>
+      <div class="input-field select-type">
+        <label for="">To date</label>
+        <input type="date">
+      </div>
+      <input type="button" class="btn" (click)="checkAttendance()" value="check">
+</div>
+<div class="result" *ngIf="result_fetched" style="position: absolute; left: 50%; transform: translateX(-50%);">
+    <table id="attend" class="attend" *ngFor="let table of tables" align=center>
+        <thead>
+            <tr>
+                <th colspan="4">Subject Code : {{table.sub_code}}</th>
+            </tr>
+            <tr>
+                <th>Enrollment No.</th>
+                <th>Total Present</th>
+                <th>Total Absent</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let data of table.details">
+            <tr>
+                <td>{{data.enrollment}}</td>
+                <td>{{data.present}}</td>
+                <td>{{data.absent}}</td>
+                <td>{{data.percent}}%</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

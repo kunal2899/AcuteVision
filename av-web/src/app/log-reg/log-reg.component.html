@@ -25,7 +25,7 @@
           </button>
         </form>
 
-        <form id="user_form" style="display: flex;"  [formGroup]="signupForm1" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
+        <form id="user_form" style="display: none;"  [formGroup]="signupForm1" (ngSubmit)="signUpUser()" action="#" class="sign-up-form">
           <h2 class="title">Sign up</h2>
           <div class="input-field select-type">
             <label for="">I am</label>
@@ -79,7 +79,7 @@
             </button>
           </form>
 
-        <form id="student_form" action="#" [formGroup]="signupStudentForm" (ngSubmit)="saveStudentProfile()" style="display: none;" class="sign-up-form student-form">
+        <form id="student_form" action="#" [formGroup]="signupStudentForm" (ngSubmit)="saveStudentProfile()" style="display: flex;" class="sign-up-form student-form">
           <h2 class="title">Create a profile</h2>
             <div class="input-field" class="input-field" [class.input-field-error]="signupStudentForm.get('fullname').invalid && (signupStudentForm.get('fullname').touched )">
               <i class="fas fa-address-card"></i>

@@ -5,7 +5,7 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>MENU</mat-toolbar>
     <mat-nav-list>
-      <div *ngIf="isTeacher" style="margin: 10px 0;">
+      <div *ngIf="!isTeacher" style="margin: 10px 0;">
         <div class="profile">
           <img src="../../assets/idphoto.jpg" alt="">
           <div>
@@ -15,9 +15,9 @@
         </div>
         <a mat-list-item href="capture" routerLink="capture"><span></span>Take<br>Attendance</a>
         <a mat-list-item href="#"><span></span>Modify<br>Attendance</a>
-        <a mat-list-item href="#"><span></span>Check<br>Attendance</a>
+        <a mat-list-item href="check" routerLink="check"><span></span>Check<br>Attendance</a>
       </div>
-      <div *ngIf="!isTeacher">
+      <div *ngIf="isTeacher">
         <div class="profile">
           <img src="../../assets/idphoto.jpg" alt="">
           <div>

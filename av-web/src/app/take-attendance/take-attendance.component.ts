@@ -11,6 +11,7 @@ export class TakeAttendanceComponent implements OnInit {
 
   result_fetched:boolean
 
+
   dept = ['CSE','IT','ECE','EEE','EE','ME','CE','AE','EIE','PE','ChE']
   sem = [1,2,3,4,5,6,7,8]
   sec = ['A','B','C','D']
